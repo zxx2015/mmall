@@ -11,6 +11,7 @@
 
     <context:component-scan base-package="com.mmall" annotation-config="true"/>
 
+
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="order" value="2"/>
@@ -57,9 +58,12 @@
         <property name="validationQuery" value="SELECT 1 FROM dual"/>
     </bean>
 
+
+    <!--sqlSessionFactory配置-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml"></property>
+        <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml">
+        </property>
 
         <!-- 分页插件 -->
         <property name="plugins">
@@ -76,15 +80,21 @@
 
     </bean>
 
+    <!--mmapper文件扫描器-->
     <bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.mmall.dao"/>
     </bean>
 
+    <bean name="mapperScannerConf" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mmall.dao"/>
+    </bean>
     <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
     <!-- 事务管理 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
+        <!--<property name="dataSource" value= #{name}/>-->
+
         <property name="rollbackOnCommitFailure" value="true"/>
     </bean>
 

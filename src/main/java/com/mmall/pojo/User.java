@@ -40,6 +40,7 @@ public class User {
         super();
     }
 
+
     public Integer getId() {
         return id;
     }
@@ -119,4 +120,5 @@ public class User {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
 }

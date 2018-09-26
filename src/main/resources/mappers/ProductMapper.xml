@@ -21,11 +21,57 @@
     id, category_id, name, subtitle, main_image, sub_images, detail, price, stock, status, 
     create_time, update_time
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from mmall_product
     where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    order by #{what} #{order}
+  </select>
+  <select id="searchList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    <where>
+      <if test="productName!=null">
+      and name like #{productName}
+      </if>
+      <if test="productId!=null">
+      and id = #{productId}
+    </if>
+    </where>
+  </select>
+  <select id="searchListPortal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    where category_id = #{categoryId}
+    <if test="productName!=null">
+    and name like #{productName}
+    </if>
+    order by #{what} #{order}
+  </select>
+  <select id="searchByCategoryId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    where status=1
+    <if test="productName!=null">
+      and name like #{productName}
+    </if>
+    <if test="categoryIds!=null">
+      and category_id in
+      <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIds">
+        #{item}
+      </foreach>
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_product

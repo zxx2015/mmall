@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
+<!--DAO层,mybatis-generator生成mapper的一些配置-->
+
 <generatorConfiguration>
     <!--导入属性配置-->
     <properties resource="datasource.properties"></properties>
